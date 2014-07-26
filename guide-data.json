@@ -1,133 +1,133 @@
 [{
     "start": 0,
-    "end": 16,
+    "end": 13,
     "text": "Theme 1.  A series of sparse F minor arpeggios rises from the depths of the piano, ending in a trill on the dominant."
 }, {
-    "start": 16,
-    "end": 30,
+    "start": 13,
+    "end": 23,
     "text": "The same theme of arpeggios and trill, now repeated a half step higher in G-flat major."
 }, {
-    "start": 30,
-    "end": 49,
+    "start": 23,
+    "end": 38,
     "text": "Further elaboration on the trill, each time answered by an ominous motif in the bass. This motif, consisting of three short notes followed by a long note, is perhaps one of the precursors to the famous 'Fate' motif in Beethoven's 5th symphony (op. 67)."
 }, {
-    "start": 49,
-    "end": 60,
+    "start": 38,
+    "end": 46,
     "text": "The music suddenly explodes into a violent outburst; a series of broken arpeggios spanning the entire length of Beethoven's piano crash down on the listener, as if fate had dealt the composer a catastrophic hand."
 }, {
-    "start": 60,
-    "end": 79,
+    "start": 46,
+    "end": 61,
     "text": "Theme 1 is now restated, not as quiet sparse arpeggios, but with full-blown chords."
 }, {
-    "start": 79,
-    "end": 104,
+    "start": 61,
+    "end": 81,
     "text": "Modulating passage. The triplet rhythm from the fate motif now rises to the forefront, coupled with nervous chords and syncopations in the right hand. The music, starting in A-flat minor, gradually modulates into A-flat major (the relative major of F minor) in preparation for the second theme."
 }, {
-    "start": 104,
-    "end": 124,
+    "start": 81,
+    "end": 97,
     "text": "Theme 2, in A-flat major. A glorious, comforting melody that stands in stark contrast to the stormy nature of Theme 1. Yet it is also clearly derived from Theme 1's rising arpeggios. In other words, these two themes can be thought of not just as contrasting themes, but as split personalities belonging to the same character!"
 }, {
-    "start": 124,
-    "end": 150,
+    "start": 97,
+    "end": 116,
     "text": "All too quickly, Theme 2 grinds to a halt as the music modulates back to A-flat minor. This is punctuated by 3 rising trills followed by a gradual descent back into the depths of the piano..."
 }, {
-    "start": 150,
-    "end": 182,
+    "start": 116,
+    "end": 149,
     "text": "The storm breaks! The closing theme in A-flat minor bursts out, furiously rejecting the brief repose offered by Theme 2. This theme is repeated an octave higher before wrapping up the end of the exposition. Like the other themes presented, it too ends quietly by gradually fading away into the distance."
 }, {
-    "start": 182,
-    "end": 227,
+    "start": 149,
+    "end": 180,
     "text": "Development section. Theme 1 is presented and developed as it modulates into a variety of keys, before seemingly settling in E major..."
 }, {
-    "start": 227,
-    "end": 255,
+    "start": 180,
+    "end": 208,
     "text": "Surprise! The rising arpeggios of Theme 1 bursts out in E minor, accompanied by a tremolo in the right hand. Tonal stability is lost as the music modulates rapidly from E minor to C minor and A-flat major in quick succession, before culminating in diminished seventh broken arpeggios."
 }, {
-    "start": 255,
-    "end": 290,
+    "start": 208,
+    "end": 238,
     "text": "Having thoroughly developed Theme 1, Beethoven now turns his attention to the development of the modulating passage. This time, he modulates instead to D-flat major instead of A-flat major."
 }, {
-    "start": 290,
-    "end": 312,
+    "start": 238,
+    "end": 252,
     "text": "Development of Theme 2. Notice that Beethoven, ever the master of structure, is developing his themes in the order he presented them in the exposition!"
 }, {
-    "start": 312,
-    "end": 322,
+    "start": 252,
+    "end": 262,
     "text": "Theme 2 development continues as it becomes clear that the music is starting to build towards a climax..."
 }, {
-    "start": 322,
-    "end": 334,
+    "start": 262,
+    "end": 276,
     "text": "A series of extremely dissonant diminished seventh arpeggios brings the development section crashing down over our heads!"
 }, {
-    "start": 334,
-    "end": 345,
+    "start": 276,
+    "end": 287,
     "text": "The fate motif presented quietly in the beginning of the exposition now returns fortissimo to conclude the development section!"
 }, {
-    "start": 345,
-    "end": 354,
+    "start": 287,
+    "end": 294,
     "text": "Recapitulation. Theme 1 returns, this time accompanied by triplets in the bass."
 }, {
-    "start": 354,
-    "end": 363,
+    "start": 294,
+    "end": 302,
     "text": "Theme 1 repeated half a step higher, just like in the exposition."
 }, {
-    "start": 363,
-    "end": 382,
+    "start": 302,
+    "end": 319,
     "text": "Further elaboration on the trills, followed by the violent outburst, just like in the exposition."
 }, {
-    "start": 382,
-    "end": 402,
+    "start": 319,
+    "end": 334,
     "text": "Theme 1 is restated forcefully with chords, but this time most unexpectedly in F major instead of F minor! The sudden entrance of a major key in the recapitulation for a sonata form movement resolutely in minor is an idea that Beethoven would realize fully in the first movement of his 9th symphony."
 }, {
-    "start": 402,
-    "end": 411,
+    "start": 334,
+    "end": 343,
     "text": "Unlike the exposition, Beethoven here writes some additional modulation to prepare the music for the second theme, which should now be in the key of F instead of A-flat."
 }, {
-    "start": 411,
-    "end": 436,
+    "start": 343,
+    "end": 363,
     "text": "Modulating passage, now in F minor instead of A-flat minor."
 }, {
-    "start": 436,
-    "end": 456,
+    "start": 363,
+    "end": 378,
     "text": "Theme 2, now in F major. As before, it is a glorious, comforting melody that stands in stark contrast to the stormy nature of Theme 1. Yet it is also clearly derived from Theme 1's rising arpeggios. In other words, these two themes can be thought of not just as contrasting themes, but as split personalities belonging to the same character!"
 }, {
-    "start": 456,
-    "end": 480,
+    "start": 378,
+    "end": 397,
     "text": "All too quickly, Theme 2 grinds to a halt as the music modulates back to F minor. This is punctuated by 3 rising trills followed by a gradual descent back into the depths of the piano..."
 }, {
-    "start": 480,
-    "end": 506,
+    "start": 397,
+    "end": 425,
     "text": "The storm breaks! The closing theme in F minor bursts out, furiously rejecting the brief repose offered by Theme 2. This theme is repeated an octave higher before wrapping up the end of the recapitulation."
 }, {
-    "start": 506,
-    "end": 521,
+    "start": 425,
+    "end": 439,
     "text": "Coda. Instead of coming to an abrupt halt as in the exposition, the music once again begins to modulate through a variety of keys, as if searching, desperately, for a moment of repose..."
 }, {
-    "start": 521,
-    "end": 531,
+    "start": 439,
+    "end": 446,
     "text": "It seems that we have found it. Theme 2 is presented, once again, in D-flat major, just as in the development section..."
 }, {
-    "start": 531,
-    "end": 540,
+    "start": 446,
+    "end": 454,
     "text": "As the left-hand harmonies become more dissonant, and as the key of F minor begins to reaffirm itself, we realize with horror that this repose is only a brief illusion..."
 }, {
-    "start": 540,
-    "end": 571,
+    "start": 454,
+    "end": 491,
     "text": "What follows can perhaps only be described as an expression of the utmost fury. An extended virtuosic passage featuring broken arpeggios spanning the entire length of Beethoven's keyboard seems to prepare us for an impressive climax."
 }, {
-    "start": 571,
-    "end": 596,
+    "start": 491,
+    "end": 521,
     "text": "As the music suddenly dims in volume, we hear once again, the ominous Fate motif pervasive throughout the entire movement..."
 }, {
-    "start": 596,
-    "end": 614,
+    "start": 521,
+    "end": 537,
     "text": "All hell breaks loose! Theme 2, the heroic counterpart to Theme 1, is now presented in the same F minor, signifying its defeat."
 }, {
-    "start": 614,
-    "end": 627,
+    "start": 537,
+    "end": 550,
     "text": "An extremely virtuosic passage featuring rapid-fire chords and syncopations brings this massive movement to its final climax."
 }, {
-    "start": 627,
+    "start": 550,
     "end": 900,
     "text": "Perhaps contrary to expectation, the movement ends quietly, with a final F minor arpeggio accompanied with tremolo, that descends back down to the lowest register of Beethoven's piano from whence it came. The tragedy, ultimately, has only just begun."
 }]
