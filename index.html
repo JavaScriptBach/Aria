@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>ShareClassical - Beethoven - Piano Sonata No. 23 in F minor, op. 57</title>
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/styles.css" rel="stylesheet">
+	<script src="pdfjs-1.0.68-dist/build/pdf.js"></script>
+</head>
+<body ng-controller="audioCtrl">
+	<div class="navbar navbar-default" role="navigation">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">ShareClassical</a>
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li>
+						<a href="#">
+							Browse Guides
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							Create New Guide
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							Edit My Guides
+						</a>
+					</li>
+
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li>
+						<a href="#">
+							Register
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							Login
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div id="title">
+					<header>
+						<h1 class="text-center">Beethoven - Piano Sonata No. 23 in F minor, op. 57</h1>
+					</header>
+					<p class="text-justify">
+						This sonata, commonly known as the Appassionata sonata, is one of Beethoven's most popular and is a staple of the modern concert repertoire. Written during the composer's middle period, it is a work of epic proportions, demanding both a virtuoso technique and great musical maturity. The first movement (presented here) is a large scale tragedy written in sonata form, with a long, diverse development section and a greatly extended coda. It demonstrates the composer's complete mastery of sonata form, both structurally and dramatically. The second movement, a series of variations on a theme of heartfelt simplicity, provides a foil to the turbulent nature of the first movement. It is calm and tranquil, providing comfort and hope in response to the enormous struggles presented in the first movement. Yet this hope is only fleeting, as the finale, following immediately after the slow movement with no break in between, shatters this brief reverie with a dissonant transition back to F minor before driving the music to the breaking point. As a whole, this sonata, with its orchestral grandeur, is a shining example of the composer's mastery of large scale piano writing. It stands, along with the Waldstein sonata (op. 53), as one of the greatest piano sonatas in Beethoven's middle period.
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4" data-spy="affix">
+				<div id="guide">
+					<header>
+						<h2 class="text-center">Listening Guide</h2>
+					</header>
+					<div class="text-center">
+						<audio src="audio.mp3" preload="auto" controls my-audio>Please install an mp3 plugin for your browser.</audio>
+					</div>
+					<div ng-repeat="bullet in guideData">
+						<p class="show-hide-text text-justify" ng-show="(bullet.start <= time) && (time < bullet.end)">{{bullet.text}}</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-8 col-md-offset-4">
+				<div id="score">
+					<header>
+						<h2 class="text-center">Score</h2>
+					</header>
+					<canvas id="canvas" my-score></canvas>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/angular.min.js"></script>
+	<script src="js/angular-animate.min.js"></script>
+	<script src="js/app.js"></script>
+</body>
+</html>
