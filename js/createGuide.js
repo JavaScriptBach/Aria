@@ -1,5 +1,9 @@
 "use strict";
 (function() {
+	$("input[type='text']").change(function() {
+		console.log(this.value);
+	});
+
 	$("#add-row-btn").click(function() {
 		var rows = $("tr");
 		var lastRow = rows.eq(rows.length - 1);
@@ -13,7 +17,7 @@
 		var html = "<tr><td><input type='text' value='" + nextRowPageNumber + "'></td><td>";
 		html += "<input type='text' value='" + nextRowStartTime + "'></td>";
 		html += "<td><input type='text' value='foo'></td>";
-		document.querySelector("tbody").innerHTML += html;
+		$("tbody").append(html);
 	});
 
 	$("#remove-row-btn").click(function() {
