@@ -1,3 +1,7 @@
+audio {
+  width: 95%;
+}
+
 header {
   background-color: #368ee0;
   color: white;
@@ -5,11 +9,12 @@ header {
 
 #title, #guide, #score{
   border: 2px solid #368ee0;
-}
-
-#title {
   margin-bottom: 20px;
 }
+
+/*#title {
+  margin-bottom: 20px;
+}*/
 
 #title header {
   padding: 20px;
