@@ -21,8 +21,25 @@
         $scope.viewport = null;
         $scope.canvasContext = null;
         $scope.currentPage = 1;
-        $scope.displayPage = function() {
+
+        // Displays the current page as specified by $scope.currentPage
+        // if recalc is set to true, then recalculates the dimensions
+        // of the viewport before displaying.
+        $scope.displayPage = function(recalc) {
             $scope.pdf.getPage($scope.currentPage).then(function(page) {
+                if (recalc) {
+                    var desiredWidth = $("#score").width() - parseInt($("#score").parent().css("padding-right"));
+                    var viewport = page.getViewport(1);
+                    var scale = desiredWidth / viewport.width;
+                    var scaledViewport = page.getViewport(scale);
+                    $scope.viewport = scaledViewport;
+                    // Prepare canvas using PDF page dimensions
+                    var canvas = document.getElementById("canvas");
+                    var context = canvas.getContext('2d');
+                    $scope.canvasContext = context;
+                    canvas.height = scaledViewport.height;
+                    canvas.width = scaledViewport.width;
+                }
                 page.render({
                     canvasContext: $scope.canvasContext,
                     viewport: $scope.viewport
@@ -57,7 +74,7 @@
             // Current page isn't correct, so we compute the correct page.
             var computed = $scope.findPage(0, $scope.scoreData.length);
             $scope.currentPage = computed;
-            $scope.displayPage();
+            $scope.displayPage(false);
         };
     });
 
@@ -82,28 +99,18 @@
                 PDFJS.getDocument(url).then(function(pdf) {
                     scope.pdf = pdf;
                     // Fetch first page
-                    scope.pdf.getPage(1).then(function(page) {
-                        var desiredWidth = $("#score").width() - parseInt($("#score").parent().css("padding-right"));
-                        var viewport = page.getViewport(1);
-                        var scale = desiredWidth / viewport.width;
-                        var scaledViewport = page.getViewport(scale);
-                        scope.viewport = scaledViewport;
-                        // Prepare canvas using PDF page dimensions
-                        var canvas = element[0];
-                        var context = canvas.getContext('2d');
-                        scope.canvasContext = context;
-                        canvas.height = scaledViewport.height;
-                        canvas.width = scaledViewport.width;
-                        // Render PDF page into canvas context
-                        page.render({
-                            canvasContext: scope.canvasContext,
-                            viewport: scope.viewport
-                        });
+                    scope.displayPage(true);
+                    var resizeID;
+                    $(window).resize(function() {
+                        clearTimeout(resizeID);
+                        resizeID = setTimeout(function() {
+                            scope.displayPage(true);
+                        }, 500);
                     });
                 });
             }
         };
     });
 
-    // TODO: make score canvas responsive to window resize
+    // TODO: make score canvas not overflow its container
 })();
