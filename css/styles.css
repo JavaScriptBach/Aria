@@ -1,10 +1,13 @@
-/*.affix {
-  top: 100px;
-  left: 0;
-}*/
+.affix {
+  top: 0;
+}
 
 audio {
   width: 95%;
+}
+
+#score {
+  overflow: hidden;
 }
 
 header {
@@ -16,10 +19,6 @@ header {
   border: 2px solid #368ee0;
   margin-bottom: 20px;
 }
-
-/*#title {
-  margin-bottom: 20px;
-}*/
 
 #title header {
   padding: 20px;

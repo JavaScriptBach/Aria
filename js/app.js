@@ -1,6 +1,25 @@
 "use strict";
 // Remember: no jQuery
 (function() {
+    // TODO: put this fucking spaghetti code somewhere 
+    // where it can actually be read.
+    var topOffset = $("#guide-container").offset().top;
+    $("#guide-container").affix({
+        offset: {
+            top: function() {
+                return topOffset;
+            }
+        }
+    });
+
+    $("#guide-container").on("affix.bs.affix", function() {
+        $("#score-container").addClass("col-sm-offset-4");
+    });
+
+    $("#guide-container").on("affix-top.bs.affix", function() {
+        $("#score-container").removeClass("col-sm-offset-4");
+    });
+
     // Create Angular app
     var app = angular.module('app', ['ngAnimate']);
 
@@ -102,6 +121,7 @@
                     scope.displayPage(true);
                     var resizeID;
                     $(window).resize(function() {
+                        topOffset = $("#guide-container").offset().top;
                         clearTimeout(resizeID);
                         resizeID = setTimeout(function() {
                             scope.displayPage(true);
@@ -112,5 +132,5 @@
         };
     });
 
-    // TODO: make score canvas not overflow its container
+    // TODO: disable affix on xs viewport
 })();
