@@ -1,25 +1,6 @@
 "use strict";
 // Remember: no jQuery
 (function() {
-    // TODO: put this fucking spaghetti code somewhere 
-    // where it can actually be read.
-    var topOffset = $("#guide-container").offset().top;
-    $("#guide-container").affix({
-        offset: {
-            top: function() {
-                return topOffset;
-            }
-        }
-    });
-
-    $("#guide-container").on("affix.bs.affix", function() {
-        $("#score-container").addClass("col-sm-offset-4");
-    });
-
-    $("#guide-container").on("affix-top.bs.affix", function() {
-        $("#score-container").removeClass("col-sm-offset-4");
-    });
-
     // Create Angular app
     var app = angular.module('app', ['ngAnimate']);
 
@@ -40,6 +21,7 @@
         $scope.viewport = null;
         $scope.canvasContext = null;
         $scope.currentPage = 1;
+        $scope.topOffset = $("#guide-container").offset().top;
 
         // Displays the current page as specified by $scope.currentPage
         // if recalc is set to true, then recalculates the dimensions
@@ -101,7 +83,7 @@
     app.directive("myAudio", function() {
         return {
             link: function(scope, element, attrs) {
-                element.bind("timeupdate", function() {
+                element.on("timeupdate", function() {
                     scope.time = element[0].currentTime;
                     scope.$apply();
                     scope.updatePage();
@@ -131,6 +113,27 @@
             }
         };
     });
+
+    app.directive("guideContainer", function () {
+        return {
+            link: function(scope, element, attrs) {
+                element.affix({
+                    offset: {
+                        top: function() {
+                            return scope.topOffset;
+                        }
+                    }
+                });
+                element.on("affix.bs.affix", function() {
+                    $("#score-container").addClass("col-sm-offset-4");
+                });
+
+                element.on("affix-top.bs.affix", function() {
+                    $("#score-container").removeClass("col-sm-offset-4");
+                });
+            }
+        }
+    })
 
     // TODO: disable affix on xs viewport
 })();
