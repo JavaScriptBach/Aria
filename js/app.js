@@ -103,7 +103,7 @@
                     scope.displayPage(true);
                     var resizeID;
                     $(window).resize(function() {
-                        topOffset = $("#guide-container").offset().top;
+
                         clearTimeout(resizeID);
                         resizeID = setTimeout(function() {
                             scope.displayPage(true);
@@ -114,16 +114,10 @@
         };
     });
 
-    app.directive("guideContainer", function () {
+    app.directive("guideContainer", function() {
         return {
             link: function(scope, element, attrs) {
-                element.affix({
-                    offset: {
-                        top: function() {
-                            return scope.topOffset;
-                        }
-                    }
-                });
+                var enabled = false;
                 element.on("affix.bs.affix", function() {
                     $("#score-container").addClass("col-sm-offset-4");
                 });
@@ -131,9 +125,44 @@
                 element.on("affix-top.bs.affix", function() {
                     $("#score-container").removeClass("col-sm-offset-4");
                 });
+                if ($(window).width() >= 768) {
+                    // Affix element.
+                    element.affix({
+                        offset: {
+                            top: function() {
+                                return scope.topOffset;
+                            }
+                        }
+                    });
+                    enabled = true;
+                }
+                var resizeID;
+                $(window).resize(function() {
+                    clearTimeout(resizeID);
+                    resizeID = setTimeout(function() {
+                        if ($(this).width() < 768 && enabled) {
+                            $(this).off('.affix');
+                            element.removeClass("affix affix-top").removeData("bs.affix");
+                            enabled = false;
+                        } else {
+                            scope.topOffset = element.offset().top;
+                            if (!enabled) {
+                                element.affix({
+                                    offset: {
+                                        top: function() {
+                                            return scope.topOffset;
+                                        }
+                                    }
+                                });
+                                enabled = true;
+                            }
+
+                        }
+                    }, 500);
+                });
+
+
             }
         }
     })
-
-    // TODO: disable affix on xs viewport
 })();
