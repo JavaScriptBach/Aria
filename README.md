@@ -1,7 +1,7 @@
-ShareClassical
+Aria
 ==============
 
-ShareClassical is an app that makes listening to classical music fun and interactive.
+Aria is an app that makes listening to classical music fun and interactive.
 
 Features
 ========
