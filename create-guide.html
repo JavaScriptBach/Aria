@@ -75,7 +75,6 @@
 								<th>Ending Time (noninclusive)</th>
 							</tr>
 						</thead>
-						<!-- TODO: make editing possible -->
 						<tbody>
 							<form method="post" action="foo.html">
 								<tr>
@@ -88,7 +87,6 @@
 					</table>
 					<p class="text-center">
 						<button type="button" class="btn btn-success" id="add-row-btn">Add new row</button>
-						<!-- Note: make sure to provide confirmation before deleting -->
 						<button type="button" class="btn btn-danger" id="remove-row-btn">Delete last row</button>
 					</p>
 				</div>
@@ -104,13 +102,13 @@
 					<canvas id="canvas" my-score></canvas>
 					<p class="text-center">
 						Page
-						<input type="text" value="1" size="2">
-						/16
-						<button type="button" class="btn btn-default">Go</button>
+						<input type="text" value="1" size="2" id="go-page-number">
+						/1234234234
+						<button type="button" class="btn btn-default" id="go-btn">Go</button>
 					</p>
 					<ul class="pager">
-					  <li><a href="#">Previous</a></li>
-					  <li><a href="#">Next</a></li>
+					  <li id="prev-btn"><a href="#">Previous</a></li>
+					  <li id="next-btn"><a href="#">Next</a></li>
 					</ul>
 				</div>
 			</div>

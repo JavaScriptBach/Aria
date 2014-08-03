@@ -1,7 +1,52 @@
 "use strict";
 (function() {
-	$("input[type='text']").change(function() {
-		console.log(this.value);
+	// Fetch and render first page
+	var url = "score_beethoven.pdf";
+	PDFJS.workerSrc = "pdfjs-1.0.68-dist/build/pdf.worker.js";
+	PDFJS.getDocument(url).then(function(pdf) {
+		var currentPage = null;
+		var displayPage = function(pageNumber) {
+			pdf.getPage(pageNumber).then(function(page) {
+				currentPage = page;
+				var desiredWidth = $("#score").width() - parseInt($("#score").parent().css("padding-right"));
+				var viewport = page.getViewport(1);
+				var scale = desiredWidth / viewport.width;
+				var scaledViewport = page.getViewport(scale);
+				// Prepare canvas using PDF page dimensions
+				var canvas = document.getElementById("canvas");
+				var context = canvas.getContext('2d');
+				canvas.height = scaledViewport.height;
+				canvas.width = scaledViewport.width;
+				page.render({
+					canvasContext: context,
+					viewport: scaledViewport
+				});
+			});
+
+		};
+
+		displayPage(1);
+
+		$("#prev-btn").click(function() {
+			var pageNum = currentPage.pageNumber;
+			if (pageNum > 1) {
+				displayPage(pageNum - 1);
+			}
+		});
+
+		$("#next-btn").click(function() {
+			var pageNum = currentPage.pageNumber;
+			if (pageNum < pdf.numPages) {
+				displayPage(pageNum + 1);
+			}
+		});
+
+		$("#go-btn").click(function() {
+			var pageNum = parseInt($("#go-page-number").val());
+			if (pageNum >= 1 && pageNum <= pdf.numPages) {
+				displayPage(pageNum);
+			}
+		});
 	});
 
 	function escapeHTML(string) {
@@ -11,11 +56,12 @@
 		// return pre.innerHTML;
 		// return $("<pre>").text(string).html();
 		return string.replace(/&/g, '&amp;')
-            .replace(/"/g, '&quot;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;');
+			.replace(/"/g, '&quot;')
+			.replace(/</g, '&lt;')
+			.replace(/>/g, '&gt;');
 	};
 
+	// Create a new table row, with intelligently filled in values
 	$("#add-row-btn").click(function() {
 		var rows = $("tr");
 		var lastRow = rows.eq(rows.length - 1);
@@ -34,6 +80,7 @@
 		$("tbody").append(html);
 	});
 
+	// Removes the bottom-most table row after confirmation
 	$("#remove-row-btn").click(function() {
 		var rows = $("tr");
 		if (rows.length == 2)
@@ -43,5 +90,4 @@
 		}
 	});
 
-	
 })();
