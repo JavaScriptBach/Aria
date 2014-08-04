@@ -4,24 +4,26 @@
     // Create Angular app
     var app = angular.module('app', ['ngAnimate']);
 
-    // Define the controller for our app.
-    app.controller('audioCtrl', function($scope, $http) {
-        // Get the listening guide and score data.
+    // Service vs factory vs provider vs ???
+    app.service('currentTime', )
+
+    app.controller('guideCtrl', function($scope, $http) {
         $scope.guideData = [];
-        $scope.scoreData = [];
         $http.get("guide-data.json").success(function(data) {
             $scope.guideData = data;
         });
+        $scope.topOffset = $("#guide-container").offset().top;
+    });
+
+    app.controller('scoreCtrl', function($scope, $http) {
+        $scope.scoreData = [];
         $http.get("score-data.json").success(function(data) {
             $scope.scoreData = data;
         });
-
-        $scope.time = 0;
         $scope.pdf = null;
         $scope.viewport = null;
         $scope.canvasContext = null;
         $scope.currentPage = 1;
-        $scope.topOffset = $("#guide-container").offset().top;
 
         // Displays the current page as specified by $scope.currentPage
         // if recalc is set to true, then recalculates the dimensions
@@ -77,6 +79,12 @@
             $scope.currentPage = computed;
             $scope.displayPage(false);
         };
+    });
+
+    app.controller('audioCtrl', function($scope, $http) {
+        // $scope.time = 0;
+        // Both controllers need to access time.
+        // Probably need to do something with rootScope?
     });
 
     // Bind the HTML audio element so we can use it in our controller.

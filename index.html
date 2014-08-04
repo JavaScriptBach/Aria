@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="app">
+<html lang="en">
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,7 +9,7 @@
 	<link href="css/styles.css" rel="stylesheet">
 	<script src="pdfjs-1.0.68-dist/build/pdf.js"></script>
 </head>
-<body ng-controller="audioCtrl">
+<body>
 	<div class="navbar navbar-default" role="navigation">
 		<div class="container-fluid">
 			<div class="navbar-header">
@@ -56,7 +56,7 @@
 		</div>
 	</div>
 	
-	<div class="container-fluid">
+	<div class="container-fluid" ng-app="app">
 		<div class="row">
 			<div class="col-sm-12">
 				<div id="title">
@@ -76,7 +76,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-sm-4" id="guide-container" guide-container>
+			<div class="col-sm-4" id="guide-container" ng-controller="guideCtrl" guide-container>
 				<div id="guide">
 					<header>
 						<h2 class="text-center">Listening Guide</h2>
@@ -89,7 +89,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-8" id="score-container">
+			<div class="col-sm-8" ng-controller="scoreCtrl" id="score-container">
 				<div id="score">
 					<header>
 						<h2 class="text-center">Score</h2>
