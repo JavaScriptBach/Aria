@@ -56,7 +56,7 @@
 		</div>
 	</div>
 	
-	<div class="container-fluid" ng-app="app">
+	<div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-12">
 				<div id="title">
@@ -76,16 +76,16 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-sm-4" id="guide-container" ng-controller="guideCtrl" guide-container>
+			<div class="col-sm-4" id="guide-container">
 				<div id="guide">
 					<header>
 						<h2 class="text-center">Listening Guide</h2>
 					</header>
 					<div class="text-center">
-						<audio src="audio.mp3" preload="auto" controls my-audio>Please install an mp3 plugin for your browser.</audio>
+						<audio src="audio.mp3" preload="auto" controls>Please install an mp3 plugin for your browser.</audio>
 					</div>
-					<div ng-repeat="bullet in guideData">
-						<p class="show-hide-text text-justify" ng-show="(bullet.start <= time) && (time < bullet.end)">{{bullet.text}}</p>
+					<div>
+						<p class="show-hide-text text-justify">Bullets go here</p>
 					</div>
 				</div>
 			</div>
@@ -94,15 +94,15 @@
 					<header>
 						<h2 class="text-center">Score</h2>
 					</header>
-					<canvas id="canvas" my-score></canvas>
+					<canvas id="canvas"></canvas>
 				</div>
 			</div>
 		</div>
 	</div>
 	<script src="js/jquery-2.1.1.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
-	<script src="js/angular.min.js"></script>
-	<script src="js/angular-animate.min.js"></script>
+	<!-- <script src="js/angular.min.js"></script>
+	<script src="js/angular-animate.min.js"></script> -->
 	<script src="js/app.js"></script>
 </body>
 </html>
