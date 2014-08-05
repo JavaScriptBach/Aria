@@ -12,13 +12,37 @@
     var pdfViewport = null;
     var canvasContext = null;
     var currentPage = 1;
+    var $audio = $("audio");
 
-    // Load guide and score data.
+    // Load guide data.
     $.getJSON("guide-data.json", function(data) {
         guideData = data;
+
+        // Create all the bullets and inject them into the DOM
+        var paragraphs = $();
+        $.each(guideData, function(i, v) {
+            var el = $("<p>").text(v.text).data({
+                "start": v.start,
+                "end": v.end,
+            });
+            paragraphs = paragraphs.add(el);
+        });
+        $("#guide-bullets-container").append(paragraphs);
+
+        // Listen to audio timeupdate
+        $audio.on("timeupdate", function() {
+
+        });
     });
+
+    // Load score data.
     $.getJSON("score-data.json", function(data) {
         scoreData = data;
+
+        // Listen to audio timeupdate
+        $audio.on("timeupdate", function() {
+            updateCurrentPage(this.currentTime);
+        });
     });
 
     // Load PDF and display first page.
@@ -28,20 +52,12 @@
         displayCurrentPage(true);
     });
 
-    // TODO: solve async problems with guide-data and score-data
-    $("audio").on("timeupdate", function() {
-        var currentTime = this.currentTime;
-        updateCurrentPage(currentTime);
-
-        // TODO: update guide data
-    });
-
     function displayCurrentPage(recalc) {
         pdf.getPage(currentPage).then(function(page) {
             if (recalc) {
                 var desiredWidth = $("#score").width() - parseInt($("#score").parent().css("padding-right"));
                 var tempViewport = page.getViewport(1);
-                var scale = desiredWidth / viewport.width;
+                var scale = desiredWidth / tempViewport.width;
                 pdfViewport = page.getViewport(scale);
                 // Prepare canvas using PDF page dimensions
                 var canvas = document.getElementById("canvas");
@@ -75,7 +91,7 @@
     function findPage(time, lo, hi) {
         if (lo >= hi)
             return -1;
-        var mid = Math.floor((lo + hi) / 2);
+        var mid = Math.floor(lo + (hi - lo) / 2);
         if (time >= scoreData[mid].end)
             return findPage(mid, hi);
         if (time < scoreData[mid].start)
