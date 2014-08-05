@@ -24,7 +24,7 @@
             var el = $("<p>").text(v.text).data({
                 "start": v.start,
                 "end": v.end,
-            });
+            }).addClass("guide-text text-justify");
             paragraphs = paragraphs.add(el);
         });
         $("#guide-bullets-container").append(paragraphs);
@@ -93,9 +93,9 @@
             return -1;
         var mid = Math.floor(lo + (hi - lo) / 2);
         if (time >= scoreData[mid].end)
-            return findPage(mid, hi);
+            return findPage(time, mid, hi);
         if (time < scoreData[mid].start)
-            return findPage(lo, mid);
+            return findPage(time, lo, mid);
         return scoreData[mid].page;
     }
 })();
