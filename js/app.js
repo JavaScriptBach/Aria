@@ -9,6 +9,8 @@
     var currentBulletNumber = 1;
     var $audio = $("audio");
     var $guideBullet = $("#guide-bullet");
+    var affixConstructed = false;
+    var affixTopOffset = 0;
 
     // Load guide data.
     $.getJSON("guide-data.json", function(data) {
@@ -37,11 +39,36 @@
         displayCurrentPage(true);
     });
 
+    // Set the affix listeners to apply the proper classes
+    $("#guide-container").on("affix.bs.affix", function() {
+        $("#score-container").addClass("col-sm-offset-4");
+    })
+    .on("affix-top.bs.affix", function() {
+        $("#score-container").removeClass("col-sm-offset-4");
+    });
+
+    // Set affix
+    updateAffix();
+
+    var resizeID;
+    $(window).resize(function() {
+        clearTimeout(resizeID);
+        resizeID = setTimeout(function() {
+            // Re-render PDF in proper dimensions
+            displayCurrentPage(true);
+
+            // Update affix
+            updateAffix();
+        }, 500);
+    });
+
     // Renders and displays the page specified by currentPage.
     // If recalc is truthy, then will calculate viewport before rendering.
     // Recalc should be set the first time this function is called.
     // Afterwards, there is no need to set it until the viewport resizes.
     function displayCurrentPage(recalc) {
+        if (!pdf)
+            return;
         pdf.getPage(currentPage).then(function(page) {
             if (recalc) {
                 var desiredWidth = $("#score").width() - parseInt($("#score").parent().css("padding-right"));
@@ -117,176 +144,31 @@
             return findData(data, time, lo, mid);
         return mid;
     }
+
+    // Updates the affix attributes, according to the following behavior:
+    // Affix is disabled on xs viewports, and enabled otherwise.
+    // If affix is enabled, will also correctly update the top offset setting.
+    function updateAffix() {
+        if ($(window).width() < 768 && affixConstructed) {
+            // Destroy affix
+            $(window).off('.affix');
+            $("#guide-container").removeClass("affix affix-top").removeData("bs.affix");
+            affixConstructed = false;
+        } else {
+            if (!affixConstructed) {
+                // Construct affix
+                $("#guide-container").affix({
+                    offset: {
+                        top: function() {
+                            return affixTopOffset;
+                        }
+                    }
+                });
+                affixConstructed = true;
+            }
+
+            // Update affix offset
+            affixTopOffset = $("#guide-container").offset().top;
+        }
+    }
 })();
-    // // Create Angular app
-    // var app = angular.module('app', ['ngAnimate']);
-
-    // // Service vs factory vs provider vs ???
-    // app.service('currentTime', )
-
-    // app.controller('guideCtrl', function($scope, $http) {
-    //     $scope.guideData = [];
-    //     $http.get("guide-data.json").success(function(data) {
-    //         $scope.guideData = data;
-    //     });
-    //     $scope.topOffset = $("#guide-container").offset().top;
-    // });
-
-    // app.controller('scoreCtrl', function($scope, $http) {
-    //     $scope.scoreData = [];
-    //     $http.get("score-data.json").success(function(data) {
-    //         $scope.scoreData = data;
-    //     });
-    //     $scope.pdf = null;
-    //     $scope.viewport = null;
-    //     $scope.canvasContext = null;
-    //     $scope.currentPage = 1;
-
-    //     // Displays the current page as specified by $scope.currentPage
-    //     // if recalc is set to true, then recalculates the dimensions
-    //     // of the viewport before displaying.
-    //     $scope.displayPage = function(recalc) {
-    //         $scope.pdf.getPage($scope.currentPage).then(function(page) {
-    //             if (recalc) {
-    //                 var desiredWidth = $("#score").width() - parseInt($("#score").parent().css("padding-right"));
-    //                 var viewport = page.getViewport(1);
-    //                 var scale = desiredWidth / viewport.width;
-    //                 var scaledViewport = page.getViewport(scale);
-    //                 $scope.viewport = scaledViewport;
-    //                 // Prepare canvas using PDF page dimensions
-    //                 var canvas = document.getElementById("canvas");
-    //                 var context = canvas.getContext('2d');
-    //                 $scope.canvasContext = context;
-    //                 canvas.height = scaledViewport.height;
-    //                 canvas.width = scaledViewport.width;
-    //             }
-    //             page.render({
-    //                 canvasContext: $scope.canvasContext,
-    //                 viewport: $scope.viewport
-    //             });
-    //         });
-    //     };
-
-    //     // Returns the current page the view should be displaying
-    //     // Uses binary search. Hence the score data must be a sorted array.
-    //     // lo = lowest index inclusive
-    //     // hi = highest index noninclusive
-    //     $scope.findPage = function(lo, hi) {
-    //         if (lo >= hi)
-    //             return -1;
-    //         var mid = Math.floor((lo + hi) / 2);
-    //         if ($scope.time >= $scope.scoreData[mid].end)
-    //             return $scope.findPage(mid, hi);
-    //         if ($scope.time < $scope.scoreData[mid].start)
-    //             return $scope.findPage(lo, mid);
-    //         return $scope.scoreData[mid].page;
-    //     }
-
-    //     // Updates the page on the DOM, if and only if necessary.
-    //     $scope.updatePage = function() {
-    //         if ($scope.scoreData == [])
-    //             return;
-    //         // First check if the current page is correct.
-    //         var data = $scope.scoreData[$scope.currentPage - 1];
-    //         if ($scope.time >= data.start && $scope.time < data.end)
-    //             return;
-
-    //         // Current page isn't correct, so we compute the correct page.
-    //         var computed = $scope.findPage(0, $scope.scoreData.length);
-    //         $scope.currentPage = computed;
-    //         $scope.displayPage();
-    //     };
-    // });
-
-    // app.controller('audioCtrl', function($scope, $http) {
-    //     // $scope.time = 0;
-    //     // Both controllers need to access time.
-    //     // Probably need to do something with rootScope?
-    // });
-
-    // // Bind the HTML audio element so we can use it in our controller.
-    // app.directive("myAudio", function() {
-    //     return {
-    //         link: function(scope, element, attrs) {
-    //             element.on("timeupdate", function() {
-    //                 scope.time = element[0].currentTime;
-    //                 scope.$apply();
-    //                 scope.updatePage();
-    //             });
-    //         }
-    //     };
-    // });
-
-    // app.directive("myScore", function() {
-    //     return {
-    //         link: function(scope, element, attrs) {
-    //             var url = "score_beethoven.pdf";
-    //             PDFJS.workerSrc = "pdfjs-1.0.68-dist/build/pdf.worker.js";
-    //             PDFJS.getDocument(url).then(function(pdf) {
-    //                 scope.pdf = pdf;
-    //                 // Fetch first page
-    //                 scope.displayPage(true);
-    //                 var resizeID;
-    //                 $(window).resize(function() {
-
-    //                     clearTimeout(resizeID);
-    //                     resizeID = setTimeout(function() {
-    //                         scope.displayPage(true);
-    //                     }, 500);
-    //                 });
-    //             });
-    //         }
-    //     };
-    // });
-
-    // app.directive("guideContainer", function() {
-    //     return {
-    //         link: function(scope, element, attrs) {
-    //             var enabled = false;
-    //             element.on("affix.bs.affix", function() {
-    //                 $("#score-container").addClass("col-sm-offset-4");
-    //             });
-
-    //             element.on("affix-top.bs.affix", function() {
-    //                 $("#score-container").removeClass("col-sm-offset-4");
-    //             });
-    //             if ($(window).width() >= 768) {
-    //                 // Affix element.
-    //                 element.affix({
-    //                     offset: {
-    //                         top: function() {
-    //                             return scope.topOffset;
-    //                         }
-    //                     }
-    //                 });
-    //                 enabled = true;
-    //             }
-    //             var resizeID;
-    //             $(window).resize(function() {
-    //                 clearTimeout(resizeID);
-    //                 resizeID = setTimeout(function() {
-    //                     if ($(this).width() < 768 && enabled) {
-    //                         $(this).off('.affix');
-    //                         element.removeClass("affix affix-top").removeData("bs.affix");
-    //                         enabled = false;
-    //                     } else {
-    //                         scope.topOffset = element.offset().top;
-    //                         if (!enabled) {
-    //                             element.affix({
-    //                                 offset: {
-    //                                     top: function() {
-    //                                         return scope.topOffset;
-    //                                     }
-    //                                 }
-    //                             });
-    //                             enabled = true;
-    //                         }
-
-    //                     }
-    //                 }, 500);
-    //             });
-
-
-    //         }
-    //     }
-    // })
