@@ -16,8 +16,12 @@ Tech
 - HTML/CSS/JavaScript (duh)
 - Twitter Bootstrap
 - jQuery
-- Angular.js
 - PDF.js
+
+Demo
+====
+
+Check out this [listening guide for the first movement of Beethoven's Appassionata sonata](http://javascriptbach.github.io/Aria/). 
 
 Upcoming Features
 =================
