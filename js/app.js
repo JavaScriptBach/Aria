@@ -1,37 +1,33 @@
 "use strict";
 (function() {
-    // What if I just used jQuery?
-    // Display HTML.
-    // Load guide data, score data and PDF.
-    // Bind audio to timeupdate. Update guide data and score data along with audio.
-    // Do some stupid on resize shit to make the page responsive.
-    // ????
     var guideData = null;
     var scoreData = null;
     var pdf = null;
     var pdfViewport = null;
     var canvasContext = null;
     var currentPage = 1;
+    var currentBulletNumber = 1;
     var $audio = $("audio");
+    var $guideBullet = $("#guide-bullet");
 
     // Load guide data.
     $.getJSON("guide-data.json", function(data) {
         guideData = data;
 
         // Create all the bullets and inject them into the DOM
-        var paragraphs = $();
-        $.each(guideData, function(i, v) {
-            var el = $("<p>").text(v.text).data({
-                "start": v.start,
-                "end": v.end,
-            }).addClass("guide-text text-justify");
-            paragraphs = paragraphs.add(el);
-        });
-        $("#guide-bullets-container").append(paragraphs);
+        // var paragraphs = $();
+        // $.each(guideData, function(i, v) {
+        //     var el = $("<p>").text(v.text).data({
+        //         "start": v.start,
+        //         "end": v.end,
+        //     }).addClass("guide-text text-justify");
+        //     paragraphs = paragraphs.add(el);
+        // });
+        // $("#guide-bullets-container").append(paragraphs);
 
         // Listen to audio timeupdate
         $audio.on("timeupdate", function() {
-
+            updateDOM("guide", this.currentTime);
         });
     });
 
@@ -41,7 +37,7 @@
 
         // Listen to audio timeupdate
         $audio.on("timeupdate", function() {
-            updateCurrentPage(this.currentTime);
+            updateDOM("score", this.currentTime);
         });
     });
 
@@ -74,29 +70,44 @@
             
     }
 
-    function updateCurrentPage(time) {
-        if (!scoreData)
-            return;
-        // First check if the current page is correct.
-        var data = scoreData[currentPage - 1];
-        if (time >= data.start && time < data.end)
-            return;
-
-        // Current page isn't correct, so we compute the correct page.
-        var computed = findPage(time, 0, scoreData.length);
-        currentPage = computed;
-        displayCurrentPage();
+    function updateDOM(type, time) {
+        if (type === "score") {
+            if (!scoreData)
+                return;
+            // First check if the current page is correct.
+            var data = scoreData[currentPage - 1];
+            if (time >= data.start && time < data.end)
+                return;
+            currentPage = scoreData[findIndex(type, time)].page;
+            displayCurrentPage();
+        } else {
+            if (!guideData)
+                return;
+            var data = guideData[currentBulletNumber - 1];
+            if (time >= data.start && time < data.end)
+                return;
+            var idx = findIndex(type, time);
+            currentBulletNumber = idx + 1;
+            $guideBullet.text(guideData[idx].text);
+        }
     }
 
-    function findPage(time, lo, hi) {
+    function findIndex(type, time) {
+        if (type === "score")
+            return findDataIndex(scoreData, time, 0, scoreData.length);
+        else
+            return findDataIndex(guideData, time, 0, guideData.length);
+    }
+
+    function findDataIndex(data, time, lo, hi) {
         if (lo >= hi)
             return -1;
         var mid = Math.floor(lo + (hi - lo) / 2);
-        if (time >= scoreData[mid].end)
-            return findPage(time, mid, hi);
-        if (time < scoreData[mid].start)
-            return findPage(time, lo, mid);
-        return scoreData[mid].page;
+        if (time >= data[mid].end)
+            return findData(data, time, mid, hi);
+        if (time < data[mid].start)
+            return findData(data, time, lo, mid);
+        return mid;
     }
 })();
     // // Create Angular app
