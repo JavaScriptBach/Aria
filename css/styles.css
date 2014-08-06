@@ -15,7 +15,7 @@ header {
   color: white;
 }
 
-#title, #guide, #score{
+#title, #guide, #score {
   border: 2px solid #368ee0;
   margin-bottom: 20px;
 }
@@ -43,24 +43,6 @@ header {
   padding-left: 10px;
   padding-right: 10px;
   margin-bottom: 20px;
-}
-
-
-.show-hide-text {
-    padding: 10px;
-    line-height: 20px;
-    margin: 0;
-}
-
-.show-hide-text.ng-hide-remove.ng-hide-remove-active {
-  -webkit-transition: all linear 0.5s;
-  transition: all linear 0.5s;
-}
-
-.show-hide-text.ng-hide {
-    line-height: 0;
-    opacity: 0;
-    padding: 0 10px;
 }
 
 .guide-text {

@@ -20,6 +20,10 @@
         $audio.on("timeupdate", function() {
             updateDOM("guide", this.currentTime);
         });
+
+        // Display the first bullet, if applicable.
+        if (guideData.length && guideData[0])
+            $guideBullet.text(guideData[0].text);
     });
 
     // Load score data.
@@ -111,7 +115,7 @@
                 return;
             var idx = findIndex(type, time);
             currentBulletNumber = idx + 1;
-            $guideBullet.hide().text(guideData[idx].text).fadeIn(300);
+            $guideBullet.hide().text(guideData[idx].text).fadeIn();
         }
     }
 
@@ -139,9 +143,9 @@
             return -1;
         var mid = Math.floor(lo + (hi - lo) / 2);
         if (time >= arr[mid].end)
-            return findData(data, time, mid, hi);
+            return findDataIndex(arr, time, mid, hi);
         if (time < arr[mid].start)
-            return findData(data, time, lo, mid);
+            return findDataIndex(arr, time, lo, mid);
         return mid;
     }
 
