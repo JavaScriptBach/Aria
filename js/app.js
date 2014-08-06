@@ -14,17 +14,6 @@
     $.getJSON("guide-data.json", function(data) {
         guideData = data;
 
-        // Create all the bullets and inject them into the DOM
-        // var paragraphs = $();
-        // $.each(guideData, function(i, v) {
-        //     var el = $("<p>").text(v.text).data({
-        //         "start": v.start,
-        //         "end": v.end,
-        //     }).addClass("guide-text text-justify");
-        //     paragraphs = paragraphs.add(el);
-        // });
-        // $("#guide-bullets-container").append(paragraphs);
-
         // Listen to audio timeupdate
         $audio.on("timeupdate", function() {
             updateDOM("guide", this.currentTime);
@@ -48,6 +37,10 @@
         displayCurrentPage(true);
     });
 
+    // Renders and displays the page specified by currentPage.
+    // If recalc is truthy, then will calculate viewport before rendering.
+    // Recalc should be set the first time this function is called.
+    // Afterwards, there is no need to set it until the viewport resizes.
     function displayCurrentPage(recalc) {
         pdf.getPage(currentPage).then(function(page) {
             if (recalc) {
@@ -70,6 +63,9 @@
             
     }
 
+    // Updates the DOM if and only if necessary.
+    // type = A string, either "score" or "guide"
+    // time = The current time of the audio
     function updateDOM(type, time) {
         if (type === "score") {
             if (!scoreData)
@@ -88,10 +84,15 @@
                 return;
             var idx = findIndex(type, time);
             currentBulletNumber = idx + 1;
-            $guideBullet.text(guideData[idx].text);
+            $guideBullet.hide().text(guideData[idx].text).fadeIn(300);
         }
     }
 
+    // Returns the index of a sorted data array whose object contains time
+    // in its interval.
+    // type = A string, either "score" or "guide", specifying the array
+    // to search
+    // time = the current time of audio
     function findIndex(type, time) {
         if (type === "score")
             return findDataIndex(scoreData, time, 0, scoreData.length);
@@ -99,13 +100,20 @@
             return findDataIndex(guideData, time, 0, guideData.length);
     }
 
-    function findDataIndex(data, time, lo, hi) {
+    // Returns the index of a sorted array of interval objects,
+    // each containing start and end fields, such that
+    // arr[index] = the interval object containing time.
+    // arr = sorted array of interval objects
+    // time = current time of audio
+    // lo = lower bound of index to search, inclusive
+    // hi = upper bound of index to search, exclusive
+    function findDataIndex(arr, time, lo, hi) {
         if (lo >= hi)
             return -1;
         var mid = Math.floor(lo + (hi - lo) / 2);
-        if (time >= data[mid].end)
+        if (time >= arr[mid].end)
             return findData(data, time, mid, hi);
-        if (time < data[mid].start)
+        if (time < arr[mid].start)
             return findData(data, time, lo, mid);
         return mid;
     }
