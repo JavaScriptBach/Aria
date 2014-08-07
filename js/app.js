@@ -1,5 +1,5 @@
-"use strict";
 (function() {
+    "use strict";
     var guideData = null;
     var scoreData = null;
     var pdf = null;

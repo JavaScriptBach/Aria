@@ -1,5 +1,5 @@
-"use strict";
 (function() {
+	"use strict";
 	// Fetch and render first page
 	var url = "score_beethoven.pdf";
 	PDFJS.workerSrc = "pdfjs-1.0.68-dist/build/pdf.worker.js";
@@ -51,21 +51,7 @@
 
 	// Create a new table row for page data, with intelligently filled in values
 	$("#page-add-row-btn").click(function() {
-		var rows = $("#page-data tbody tr");
-		var lastRow = rows.eq(rows.length - 1);
-		var lastCols = lastRow.children();
-		var nextRowPageNumber;
-		if (rows.length == 1)
-			nextRowPageNumber = parseInt(lastCols[0].innerHTML) + 1;
-		else
-			nextRowPageNumber = parseInt(lastCols.eq(0).children().val()) + 1;
-		if (isNaN(nextRowPageNumber) || nextRowPageNumber < 1)
-			nextRowPageNumber = 1;
-		var nextRowStartTime = lastCols.eq(2).children().val();
-		var html = '<tr><td><input type="text" value="' + nextRowPageNumber + '"></td><td>';
-		html += '<input type="text" value="' + escapeHTML(nextRowStartTime) + '"></td>';
-		html += '<td><input type="text" value="foo"></td>';
-		$("#page-data tbody").append(html);
+		addRow("page");
 	});
 
 	// Removes the bottom-most table row for page data after confirmation
@@ -73,10 +59,39 @@
 		removeRow("page");
 	});
 
+	$("#guide-add-row-btn").click(function() {
+		addRow("guide");
+	});
+
 	// Removes the bottom-most table row for guide data after confirmation
 	$("#guide-remove-row-btn").click(function() {
 		removeRow("guide");
 	});
+
+	function addRow(type) {
+		var rows = $("#" + type + "-data tbody tr");
+		var lastRow = rows.eq(rows.length - 1);
+		var lastCols = lastRow.children();
+		var nextRowStartTime = lastCols.eq(2).children().val();
+		var html = '<tr><td><input type="text" value="' + escapeHTML(nextRowStartTime) + '"></td>';
+		html += '<td><input type="text" value="foo"</td>';
+		if (type === "page") {
+			var nextRowPageNumber;
+			if (rows.length == 1)
+				nextRowPageNumber = parseInt(lastCols[0].innerHTML) + 1;
+			else
+				nextRowPageNumber = parseInt(lastCols.eq(0).children().val()) + 1;
+			if (!nextRowPageNumber || nextRowPageNumber < 1)
+				nextRowPageNumber = 1;
+			
+			html += '<td><input type="text" value="' + nextRowPageNumber + '"></td></tr>';
+			$("#page-data tbody").append(html);
+		} else {
+			html += '<td><textarea autocomplete="off" cols="50" spellcheck="true" placeholder="Tell us what\'s going on during this interval!" required>';
+			html += '</textarea></td></tr>';
+			$("#guide-data tbody").append(html);
+		}
+	}
 
 	function removeRow(type) {
 		var rows = $("#" + type + "-data tbody tr");

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="app">
+<html lang="en">
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,7 +9,7 @@
 	<link href="css/create-guide.css" rel="stylesheet">
 	<script src="pdfjs-1.0.68-dist/build/pdf.js"></script>
 </head>
-<body ng-controller="audioCtrl">
+<body>
 	<div class="navbar navbar-default" role="navigation">
 		<div class="container-fluid">
 			<div class="navbar-header">
@@ -59,96 +59,98 @@
 		TODO: need to add controls to asynchronously upload an audio file.
 	-->
 	<div class="container-fluid">
-		<div class="row">
-			<div class="col-sm-12">
-				<h1 class="text-center">Create Guide</h1>
-				<h2>Step 1: Upload your audio file</h2>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-sm-4">
-				<h2>Step 2: Add page turns and guide text</h2>
-				<ul class="nav nav-tabs">
-					<li class="active"><a href="#">Page Data</a></li>
-					<li><a href="#">Guide Data</a></li>
-				</ul>
-				<div id="page-data">
-					<table class="table table-hover table-bordered">
-						<thead>
-							<tr>
-								<th>Page Number</th>
-								<th>Starting Time (inclusive)</th>
-								<th>Ending Time (noninclusive)</th>
-							</tr>
-						</thead>
-						<tbody>
-							<form>
-								<tr>
-									<td>1</td>
-									<td>0:00</td>
-									<td><input type="text" value="0:30"></td>
-								</tr>
-							</form>
-						</tbody>
-					</table>
-					<p class="text-center">
-						<button type="button" class="btn btn-success" id="page-add-row-btn">Add new row</button>
-						<button type="button" class="btn btn-danger" id="page-remove-row-btn">Delete last row</button>
-					</p>
+		<form method="post" enctype="multipart/form-data">
+			<div class="row">
+				<div class="col-sm-12">
+					<h1 class="text-center">Create Guide</h1>
+					<h2>Step 1: Upload your audio file</h2>
+					<input type="file" accept="audio/*" required>
 				</div>
-				<div id="guide-data">
-					<table class="table table-hover table-bordered">
-						<thead>
-							<tr>
-								<th>Starting Time (inclusive)</th>
-								<th>Ending Time (noninclusive)</th>
-								<th>Guide Text</th>
-							</tr>
-						</thead>
-						<tbody>
-							<form>
+			</div>
+			<div class="row">
+				<div class="col-sm-4">
+					<h2>Step 2: Add page turns and guide text</h2>
+					<ul class="nav nav-tabs">
+						<li class="active"><a href="#">Page Data</a></li>
+						<li><a href="#">Guide Data</a></li>
+					</ul>
+					<div id="page-data">
+						<table class="table table-hover table-bordered">
+							<thead>
 								<tr>
-									<td>0:00</td>
-									<td><input type="text" value="0:30"></td>
+									<th>Page Number</th>
+									<th>Starting Time (inclusive)</th>
+									<th>Ending Time (noninclusive)</th>
+								</tr>
+							</thead>
+							<tbody>
+								<form>
+									<tr>
+										<td>1</td>
+										<td>0:00</td>
+										<td><input type="text" value="0:30"></td>
+									</tr>
+								</form>
+							</tbody>
+						</table>
+						<p class="text-center">
+							<button type="button" class="btn btn-success" id="page-add-row-btn">Add new row</button>
+							<button type="button" class="btn btn-danger" id="page-remove-row-btn">Delete last row</button>
+						</p>
+					</div>
+					<div id="guide-data">
+						<table class="table table-hover table-bordered">
+							<thead>
+								<tr>
+									<th>Guide Text</th>
+									<th>Starting Time (inclusive)</th>
+									<th>Ending Time (noninclusive)</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
 									<td>
 										<textarea autocomplete="off" cols="50" spellcheck="true" placeholder="Tell us what's going on during this interval!" required></textarea>
 									</td>
+									<td>0:00</td>
+									<td><input type="text" value="0:30"></td>
+									
 								</tr>
-							</form>
-						</tbody>
-					</table>
-					<p class="text-center">
-						<button type="button" class="btn btn-success" id="guide-add-row-btn">Add new row</button>
-						<button type="button" class="btn btn-danger" id="guide-remove-row-btn">Delete last row</button>
-					</p>
+							</tbody>
+						</table>
+						<p class="text-center">
+							<button type="button" class="btn btn-success" id="guide-add-row-btn">Add new row</button>
+							<button type="button" class="btn btn-danger" id="guide-remove-row-btn">Delete last row</button>
+						</p>
+					</div>
+				</div>
+				<div class="col-sm-8">
+					<div id="score">
+						<header>
+							<h2 class="text-center">Score</h2>
+						</header>
+						<canvas id="canvas" my-score></canvas>
+						<p class="text-center">
+							Page
+							<input type="text" value="1" size="2" id="go-page-number">
+							/1234234234
+							<button type="button" class="btn btn-default" id="go-btn">Go</button>
+						</p>
+						<ul class="pager">
+						  <li id="prev-btn"><a href="#">Previous</a></li>
+						  <li id="next-btn"><a href="#">Next</a></li>
+						</ul>
+					</div>
 				</div>
 			</div>
-			<div class="col-sm-8">
-				<div id="score">
-					<header>
-						<h2 class="text-center">Score</h2>
-					</header>
-					<canvas id="canvas" my-score></canvas>
-					<p class="text-center">
-						Page
-						<input type="text" value="1" size="2" id="go-page-number">
-						/1234234234
-						<button type="button" class="btn btn-default" id="go-btn">Go</button>
-					</p>
-					<ul class="pager">
-					  <li id="prev-btn"><a href="#">Previous</a></li>
-					  <li id="next-btn"><a href="#">Next</a></li>
-					</ul>
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="text-center">
+						<button type="button" class="btn btn-lg btn-primary">Submit</button>
+					</div>
 				</div>
 			</div>
-		</div>
-		<div class="row">
-			<div class="col-sm-12">
-				<div class="text-center">
-					<button type="button" class="btn btn-lg btn-primary">Submit</button>
-				</div>
-			</div>
-		</div>
+		</form>
 	</div>
 	<script src="js/jquery-2.1.1.min.js"></script>
 	<script src="bootstrap-3.2.0-dist/js/bootstrap.min.js"></script>
