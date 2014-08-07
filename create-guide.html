@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Calibrate Page Data - Aria</title>
+	<title>Create Guide - Aria</title>
 	<link href="bootstrap-3.2.0-dist/css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/create-guide.css" rel="stylesheet">
 	<script src="pdfjs-1.0.68-dist/build/pdf.js"></script>
@@ -55,18 +55,24 @@
 			</div>
 		</div>
 	</div>
-	
+	<!--
+		TODO: need to add controls to asynchronously upload an audio file.
+	-->
 	<div class="container-fluid">
-		<h1 class="text-center">Step 2: Calibrate Page Data</h1>
-		<p class="text-center">
-			Input the correct page data into the table. Submit when finished.	
-		</p>
 		<div class="row">
-			<div class="col-md-4">
-				<div>
-					<header>
-						<h2 class="text-center">Page Data</h2>
-					</header>
+			<div class="col-sm-12">
+				<h1 class="text-center">Create Guide</h1>
+				<h2>Step 1: Upload your audio file</h2>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4">
+				<h2>Step 2: Add page turns and guide text</h2>
+				<ul class="nav nav-tabs">
+					<li class="active"><a href="#">Page Data</a></li>
+					<li><a href="#">Guide Data</a></li>
+				</ul>
+				<div id="page-data">
 					<table class="table table-hover table-bordered">
 						<thead>
 							<tr>
@@ -76,7 +82,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<form method="post" action="foo.html">
+							<form>
 								<tr>
 									<td>1</td>
 									<td>0:00</td>
@@ -86,19 +92,42 @@
 						</tbody>
 					</table>
 					<p class="text-center">
-						<button type="button" class="btn btn-success" id="add-row-btn">Add new row</button>
-						<button type="button" class="btn btn-danger" id="remove-row-btn">Delete last row</button>
+						<button type="button" class="btn btn-success" id="page-add-row-btn">Add new row</button>
+						<button type="button" class="btn btn-danger" id="page-remove-row-btn">Delete last row</button>
+					</p>
+				</div>
+				<div id="guide-data">
+					<table class="table table-hover table-bordered">
+						<thead>
+							<tr>
+								<th>Starting Time (inclusive)</th>
+								<th>Ending Time (noninclusive)</th>
+								<th>Guide Text</th>
+							</tr>
+						</thead>
+						<tbody>
+							<form>
+								<tr>
+									<td>0:00</td>
+									<td><input type="text" value="0:30"></td>
+									<td>
+										<textarea autocomplete="off" cols="50" spellcheck="true" placeholder="Tell us what's going on during this interval!" required></textarea>
+									</td>
+								</tr>
+							</form>
+						</tbody>
+					</table>
+					<p class="text-center">
+						<button type="button" class="btn btn-success" id="guide-add-row-btn">Add new row</button>
+						<button type="button" class="btn btn-danger" id="guide-remove-row-btn">Delete last row</button>
 					</p>
 				</div>
 			</div>
-			<div class="col-md-8">
+			<div class="col-sm-8">
 				<div id="score">
 					<header>
 						<h2 class="text-center">Score</h2>
 					</header>
-					<div class="text-center">
-						<audio src="audio.mp3" preload="auto" controls my-audio>Please install an mp3 plugin for your browser.</audio>
-					</div>
 					<canvas id="canvas" my-score></canvas>
 					<p class="text-center">
 						Page
@@ -113,8 +142,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="text-center">
-			<button type="button" class="btn btn-lg btn-primary">Submit</button>
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="text-center">
+					<button type="button" class="btn btn-lg btn-primary">Submit</button>
+				</div>
+			</div>
 		</div>
 	</div>
 	<script src="js/jquery-2.1.1.min.js"></script>
