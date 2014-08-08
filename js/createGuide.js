@@ -5,6 +5,7 @@
 	PDFJS.workerSrc = "pdfjs-1.0.68-dist/build/pdf.worker.js";
 	PDFJS.getDocument(url).then(function(pdf) {
 		var currentPage = null;
+		$("#pdf-num-pages").text(pdf.numPages);
 		var displayPage = function(pageNumber) {
 			pdf.getPage(pageNumber).then(function(page) {
 				currentPage = page;
@@ -68,13 +69,24 @@
 		removeRow("guide");
 	});
 
+	$("#guide-data").hide();
+	$(".nav-tabs li").click(function() {
+		var active = $(this).hasClass("active");
+		if (!active) {
+			$(".nav-tabs li").toggleClass("active");
+			$("#guide-data").add("#page-data").toggle();
+		}
+	});
+
+	// Appends a new row to the table, with intelligently filled in values
+	// type = A string, either "page" or "guide", which describes
+	// the table to append to.
 	function addRow(type) {
 		var rows = $("#" + type + "-data tbody tr");
 		var lastRow = rows.eq(rows.length - 1);
 		var lastCols = lastRow.children();
-		var nextRowStartTime = lastCols.eq(2).children().val();
-		var html = '<tr><td><input type="text" value="' + escapeHTML(nextRowStartTime) + '"></td>';
-		html += '<td><input type="text" value="foo"</td>';
+		
+		var html = "";
 		if (type === "page") {
 			var nextRowPageNumber;
 			if (rows.length == 1)
@@ -84,15 +96,20 @@
 			if (!nextRowPageNumber || nextRowPageNumber < 1)
 				nextRowPageNumber = 1;
 			
-			html += '<td><input type="text" value="' + nextRowPageNumber + '"></td></tr>';
-			$("#page-data tbody").append(html);
+			html += '<tr><td><input type="text" value="' + nextRowPageNumber + '"></td>';
+			// $("#page-data tbody").append(html);
 		} else {
-			html += '<td><textarea autocomplete="off" cols="50" spellcheck="true" placeholder="Tell us what\'s going on during this interval!" required>';
-			html += '</textarea></td></tr>';
-			$("#guide-data tbody").append(html);
+			html += '<tr><td><textarea autocomplete="off" cols="50" spellcheck="true" placeholder="Tell us what\'s going on during this interval!" required>';
+			html += '</textarea></td>';
+			// $("#guide-data tbody").append(html);
 		}
+		var nextRowStartTime = lastCols.eq(2).children().val();
+		html += '<td><input type="text" value="' + escapeHTML(nextRowStartTime) + '"></td>';
+		html += '<td><input type="text" value="foo"</td></tr>';
+		$("#" + type + "-data tbody").append(html);
 	}
 
+	// Removes the last row from the table, after prompting the user for confirmation.
 	function removeRow(type) {
 		var rows = $("#" + type + "-data tbody tr");
 		if (rows.length == 1)
