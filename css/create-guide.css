@@ -1,4 +1,20 @@
 input[type='text'] {
 	border: none;
 	background-color: inherit;
+	width: 100%;
 }
+
+table {
+	table-layout: fixed;
+}
+
+td, th {
+	overflow: auto;
+}
+
+textarea {
+	width: 100%;
+}
+/*.textarea-col {
+	width: 67%;
+}*/
