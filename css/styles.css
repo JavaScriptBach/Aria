@@ -17,6 +17,7 @@ header {
 
 #title, #guide, #score {
   border: 2px solid #368ee0;
+  border-radius: 5px;
   margin-bottom: 20px;
 }
 

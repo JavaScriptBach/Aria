@@ -99,13 +99,14 @@
 			html += '<tr><td><input type="text" value="' + nextRowPageNumber + '"></td>';
 			// $("#page-data tbody").append(html);
 		} else {
-			html += '<tr><td><textarea autocomplete="off" spellcheck="true" placeholder="Tell us what\'s going on during this interval!" required>';
+			html += '<tr><td><textarea autocomplete="off" spellcheck="true"';
+			html += 'placeholder="Tell us what\'s going on during this interval!" required>';
 			html += '</textarea></td>';
 			// $("#guide-data tbody").append(html);
 		}
 		var nextRowStartTime = lastCols.eq(2).children().val();
 		html += '<td><input type="text" value="' + escapeHTML(nextRowStartTime) + '"></td>';
-		html += '<td><input type="text" value="foo"</td></tr>';
+		html += '<td><input type="text" value="' + escapeHTML(nextTime(nextRowStartTime)) + '"</td></tr>';
 		$("#" + type + "-data tbody").append(html);
 	}
 
@@ -123,5 +124,22 @@
 			.replace(/"/g, '&quot;')
 			.replace(/</g, '&lt;')
 			.replace(/>/g, '&gt;');
+	}
+
+
+	// Returns a time 1 second after the one passed in.
+	// time = A string in mm:ss format
+	// The leading zero in the minutes field may be omitted.
+	function nextTime(time) {
+		var colonIdx = time.indexOf(":");
+		if (colonIdx == -1)
+			return time;
+		var minutes = time.substring(0, colonIdx);
+		var seconds = time.substring(colonIdx + 1);
+		if (seconds === "59")
+			return +minutes + 1 + ":00";
+		else if (+seconds < 9)
+			return minutes + ":0" + (+seconds + 1);
+		return minutes + ":" + (+seconds + 1); 
 	}
 })();
