@@ -29,9 +29,11 @@ Install
 To bootstrap the project:
 
 1. Install pip
+
 	sudo apt-get install python-pip
-	
+
 2. Install Django
+
 	sudo pip install Django
 
 Run
