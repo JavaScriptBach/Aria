@@ -13,7 +13,7 @@
     var affixTopOffset = 0;
 
     // Load guide data.
-    $.getJSON("guide-data.json", function(data) {
+    $.getJSON("/static/data/json/guide-data.json", function(data) {
         guideData = data;
 
         // Listen to audio timeupdate
@@ -27,7 +27,7 @@
     });
 
     // Load score data.
-    $.getJSON("score-data.json", function(data) {
+    $.getJSON("/static/data/json/score-data.json", function(data) {
         scoreData = data;
 
         // Listen to audio timeupdate
@@ -37,8 +37,8 @@
     });
 
     // Load PDF and display first page.
-    PDFJS.workerSrc = "pdfjs-1.0.68-dist/build/pdf.worker.js";
-    PDFJS.getDocument("score_beethoven.pdf").then(function(data) {
+    PDFJS.workerSrc = "/static/assets/pdfjs-1.0.68-dist/build/pdf.worker.js";
+    PDFJS.getDocument("/static/data/pdf/score_beethoven.pdf").then(function(data) {
         pdf = data;
         displayCurrentPage(true);
     });
