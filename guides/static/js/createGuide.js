@@ -1,54 +1,5 @@
 (function() {
 	"use strict";
-	// Fetch and render first page
-	// var url = "score_beethoven.pdf";
-	// PDFJS.workerSrc = "pdfjs-1.0.68-dist/build/pdf.worker.js";
-	// PDFJS.getDocument(url).then(function(pdf) {
-	// 	var currentPage = null;
-	// 	$("#pdf-num-pages").text(pdf.numPages);
-	// 	var displayPage = function(pageNumber) {
-	// 		pdf.getPage(pageNumber).then(function(page) {
-	// 			currentPage = page;
-	// 			var desiredWidth = $("#score").width() - parseInt($("#score").parent().css("padding-right"));
-	// 			var viewport = page.getViewport(1);
-	// 			var scale = desiredWidth / viewport.width;
-	// 			var scaledViewport = page.getViewport(scale);
-	// 			// Prepare canvas using PDF page dimensions
-	// 			var canvas = document.getElementById("canvas");
-	// 			var context = canvas.getContext('2d');
-	// 			canvas.height = scaledViewport.height;
-	// 			canvas.width = scaledViewport.width;
-	// 			page.render({
-	// 				canvasContext: context,
-	// 				viewport: scaledViewport
-	// 			});
-	// 		});
-
-	// 	};
-
-	// 	displayPage(1);
-
-	// 	$("#prev-btn").click(function() {
-	// 		var pageNum = currentPage.pageNumber;
-	// 		if (pageNum > 1) {
-	// 			displayPage(pageNum - 1);
-	// 		}
-	// 	});
-
-	// 	$("#next-btn").click(function() {
-	// 		var pageNum = currentPage.pageNumber;
-	// 		if (pageNum < pdf.numPages) {
-	// 			displayPage(pageNum + 1);
-	// 		}
-	// 	});
-
-	// 	$("#go-btn").click(function() {
-	// 		var pageNum = parseInt($("#go-page-number").val());
-	// 		if (pageNum >= 1 && pageNum <= pdf.numPages) {
-	// 			displayPage(pageNum);
-	// 		}
-	// 	});
-	// });
 
 	// Create a new table row for page data, with intelligently filled in values
 	$("#page-add-row-btn").click(function() {
@@ -69,14 +20,28 @@
 		removeRow("guide");
 	});
 
-	// $("#guide-data").hide();
-	// $(".nav-tabs li").click(function() {
-	// 	var active = $(this).hasClass("active");
-	// 	if (!active) {
-	// 		$(".nav-tabs li").toggleClass("active");
-	// 		$("#guide-data").add("#page-data").toggle();
-	// 	}
-	// });
+	$("#submit-btn").click(function() {
+		$(this).prop('disabled', true);
+		var data = {
+			"pageData": [],
+			"guideData": [],
+			"summary": "Lorem ipsum",
+			"title": "Liszt Sonata in B minor",
+			"artist": "Sviatoslav Richter"
+
+		};
+		$.ajax({
+			url: "submit/",
+			type: "POST",
+			data: data,
+			error: function(jqXHR, textStatus, errorThrown) {
+				alert(errorThrown);
+			},
+			success: function(data, textStatus, jqXHR) {
+				alert("success");
+			} 
+		});
+	})
 
 	// Appends a new row to the table, with intelligently filled in values
 	// type = A string, either "page" or "guide", which describes
