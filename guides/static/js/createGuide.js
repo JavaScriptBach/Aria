@@ -20,28 +20,28 @@
 		removeRow("guide");
 	});
 
-	$("#submit-btn").click(function() {
-		$(this).prop('disabled', true);
-		var data = {
-			"pageData": [],
-			"guideData": [],
-			"summary": "Lorem ipsum",
-			"title": "Liszt Sonata in B minor",
-			"artist": "Sviatoslav Richter"
+	$("form").submit(function(e) {
+		// $(this).prop('disabled', true);
+		// var data = {
+		// 	"pageData": [],
+		// 	"guideData": [],
+		// 	"summary": "Lorem ipsum",
+		// 	"title": "Liszt Sonata in B minor",
+		// 	"artist": "Sviatoslav Richter"
 
-		};
-		$.ajax({
-			url: "submit/",
-			type: "POST",
-			data: data,
-			error: function(jqXHR, textStatus, errorThrown) {
-				alert(errorThrown);
-			},
-			success: function(data, textStatus, jqXHR) {
-				alert("success");
-			} 
-		});
-	})
+		// };
+		// $.ajax({
+		// 	url: "submit/",
+		// 	type: "POST",
+		// 	data: data,
+		// 	error: function(jqXHR, textStatus, errorThrown) {
+		// 		alert(errorThrown);
+		// 	},
+		// 	success: function(data, textStatus, jqXHR) {
+		// 		alert("success");
+		// 	} 
+		// });
+	});
 
 	// Appends a new row to the table, with intelligently filled in values
 	// type = A string, either "page" or "guide", which describes

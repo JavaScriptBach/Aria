@@ -15,22 +15,22 @@
 	-->
 	<div class="container-fluid">
 		<header id="title-header"><h1 class="text-center">Create Guide</h1></header>
-		<form method="post" enctype="multipart/form-data">
+		<form method="post" enctype="multipart/form-data" action="submit/">
 		{% csrf_token %}
 			<div class="row">
 				<div class="col-sm-12">
 					<h2>Step 1: Write a summary</h2>
-					<textarea autocomplete="off" rows="10" spellcheck="true" placeholder="Tell us why this piece is great!" required></textarea>
+					<textarea autocomplete="off" rows="10" spellcheck="true" placeholder="Tell us why this piece is great!"></textarea>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-6">
 					<h2>Step 2: Upload your audio file</h2>
-					<input type="file" accept="audio/*" required>
+					<input type="file" accept="audio/*">
 				</div>
 				<div class="col-sm-6">
 					<h2>Step 3: Upload score</h2>
-					<input type="file" accept=".pdf" required>
+					<input type="file" accept=".pdf">
 				</div>
 			</div>
 			<div class="row">
@@ -84,7 +84,7 @@
 							<tbody>
 								<tr>
 									<td class="textarea-col">
-										<textarea autocomplete="off" spellcheck="true" placeholder="Tell us what's going on during this interval!" required></textarea>
+										<textarea autocomplete="off" spellcheck="true" placeholder="Tell us what's going on during this interval!"></textarea>
 									</td>
 									<td><input type="text" value="0:00"></td>
 									<td><input type="text" value="0:30"></td>
@@ -102,7 +102,7 @@
 			<div class="row">
 				<div class="col-sm-12">
 					<div class="text-center">
-						<button type="button" class="btn btn-lg btn-primary" id="submit-btn">Submit Guide</button>
+						<input type="submit" value="Submit Guide" class="btn btn-primary">
 					</div>
 				</div>
 			</div>
