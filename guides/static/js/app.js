@@ -1,41 +1,23 @@
 (function() {
     "use strict";
-    var guideData = null;
-    var scoreData = null;
+    // Load guide and score data.
+    var guideData = $.parseJSON($("#guide-data").text());
+    var scoreData = $.parseJSON($("#score-data").text());
     var pdf = null;
     var pdfViewport = null;
     var canvasContext = null;
     var currentPage = 1;
     var currentBulletNumber = 1;
-    var $audio = $("audio");
     var $guideBullet = $("#guide-bullet");
     var affixConstructed = false;
     var affixTopOffset = 0;
 
-    // Load guide data.
-    $.getJSON("/static/data/json/guide-data.json", function(data) {
-        guideData = data;
-
-        // Listen to audio timeupdate
-        $audio.on("timeupdate", function() {
-            updateDOM("guide", this.currentTime);
-        });
-
-        // Display the first bullet, if applicable.
-        if (guideData.length && guideData[0])
-            $guideBullet.text(guideData[0].text);
+    // Bind audio.
+    $("audio").on("timeupdate", function() {
+        updateDOM("guide", this.currentTime);
+        updateDOM("score", this.currentTime);
     });
-
-    // Load score data.
-    $.getJSON("/static/data/json/score-data.json", function(data) {
-        scoreData = data;
-
-        // Listen to audio timeupdate
-        $audio.on("timeupdate", function() {
-            updateDOM("score", this.currentTime);
-        });
-    });
-
+    
     // Load PDF and display first page.
     PDFJS.workerSrc = "/static/assets/pdfjs-1.0.68-dist/build/pdf.worker.js";
     PDFJS.getDocument("/static/data/pdf/score_beethoven.pdf").then(function(data) {

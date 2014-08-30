@@ -49,3 +49,7 @@ header {
 .guide-text {
   padding: 10px;
 }
+
+#guide-data, #score-data {
+  display: none;
+}

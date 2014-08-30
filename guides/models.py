@@ -8,5 +8,8 @@ class Guide(models.Model):
 	thumbs_down = models.PositiveIntegerField()
 	artist = models.CharField(max_length=128)
 	summary = models.TextField()
+	guide_data = models.TextField()
+	score_data = models.TextField()
+	score_url = models.URLField()
 	pub_date = models.DateTimeField('date published')
 	update_date = models.DateTimeField('last updated')
