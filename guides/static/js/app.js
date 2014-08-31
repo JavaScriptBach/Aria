@@ -9,10 +9,9 @@
     var canvasContext = null;
     var currentPage = 1;
     var currentBulletNumber = 1;
-    var $guideBullet = $("#guide-bullet");
+    var $guideBullet = $("#guide-bullet").text(guideData[0].text);
     var affixConstructed = false;
     var affixTopOffset = 0;
-
     // Bind audio.
     $("audio").on("timeupdate", function() {
         updateDOM("guide", this.currentTime);
