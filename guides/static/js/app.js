@@ -4,6 +4,7 @@
     var guideData = $.parseJSON($("#guide-data").text());
     var scoreData = $.parseJSON($("#score-data").text());
     var pdf = null;
+    var pdfURL = "/static/data/" + $("#pk").text() + ".pdf";
     var pdfViewport = null;
     var canvasContext = null;
     var currentPage = 1;
@@ -20,7 +21,7 @@
     
     // Load PDF and display first page.
     PDFJS.workerSrc = "/static/assets/pdfjs-1.0.68-dist/build/pdf.worker.js";
-    PDFJS.getDocument("/static/data/pdf/score_beethoven.pdf").then(function(data) {
+    PDFJS.getDocument(pdfURL).then(function(data) {
         pdf = data;
         displayCurrentPage(true);
     });
