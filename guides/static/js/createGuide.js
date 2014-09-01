@@ -20,28 +20,39 @@
 		removeRow("guide");
 	});
 
-	$("form").submit(function(e) {
-		// $(this).prop('disabled', true);
-		// var data = {
-		// 	"pageData": [],
-		// 	"guideData": [],
-		// 	"summary": "Lorem ipsum",
-		// 	"title": "Liszt Sonata in B minor",
-		// 	"artist": "Sviatoslav Richter"
-
-		// };
-		// $.ajax({
-		// 	url: "submit/",
-		// 	type: "POST",
-		// 	data: data,
-		// 	error: function(jqXHR, textStatus, errorThrown) {
-		// 		alert(errorThrown);
-		// 	},
-		// 	success: function(data, textStatus, jqXHR) {
-		// 		alert("success");
-		// 	} 
-		// });
+	$("#submit-btn").click(function(e) {
+		$(this).prop('disabled', true);
+		if (validateData()) {
+			// TODO: parse data into a JSON string and submit it
+			$("form").submit();
+		} else {
+			alert("You did not enter valid data");
+			$(this).prop('disabled', false);
+		}
 	});
+
+	// Returns true iff user inputted valid data.
+	// A valid form is defined as the following:
+	// - Summary field is nonempty
+	// - Score and audio files are chosen
+	// - All times are in mm:ss format or m:ss format
+	// - Times in each table must be continuous and nonoverlapping
+	// - Page numbers are positive integers
+	// - Guide text is nonempty
+	function validateData() {
+		if ($.trim($("#summary").val()) == "")
+			return false;
+		// TODO: validate upload files
+
+		var pageBoxes = $("#page-data input");
+		if (pageBoxes.length % 3 != 0)
+			return false;
+		for (var i = 0; i < pageBoxes.length; i+=3) {
+			if ($.trim(pageBoxes[i].value) == "")
+				return false;
+		}
+		return true;
+	}
 
 	// Appends a new row to the table, with intelligently filled in values
 	// type = A string, either "page" or "guide", which describes
@@ -53,11 +64,7 @@
 		
 		var html = "";
 		if (type === "page") {
-			var nextRowPageNumber;
-			if (rows.length == 1)
-				nextRowPageNumber = parseInt(lastCols[0].innerHTML) + 1;
-			else
-				nextRowPageNumber = parseInt(lastCols.eq(0).children().val()) + 1;
+			var nextRowPageNumber = parseInt(lastCols.eq(0).children().val()) + 1;
 			if (!nextRowPageNumber || nextRowPageNumber < 1)
 				nextRowPageNumber = 1;
 			

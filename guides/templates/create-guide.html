@@ -16,11 +16,11 @@
 	<div class="container-fluid">
 		<header id="title-header"><h1 class="text-center">Create Guide</h1></header>
 		<form method="post" enctype="multipart/form-data" action="submit/">
-		{% csrf_token %}
+			{% csrf_token %}
 			<div class="row">
 				<div class="col-sm-12">
 					<h2>Step 1: Write a summary</h2>
-					<textarea autocomplete="off" rows="10" spellcheck="true" placeholder="Tell us why this piece is great!"></textarea>
+					<textarea autocomplete="off" id="summary" rows="10" spellcheck="true" placeholder="Tell us why this piece is great!"></textarea>
 				</div>
 			</div>
 			<div class="row">
@@ -54,8 +54,8 @@
 							<tbody>
 								<form>
 									<tr>
-										<td>1</td>
-										<td>0:00</td>
+										<td><input type="text" value="1"></td>
+										<td><input type="text" value="0:00"></td>
 										<td><input type="text" value="0:30"></td>
 									</tr>
 								</form>
@@ -102,7 +102,7 @@
 			<div class="row">
 				<div class="col-sm-12">
 					<div class="text-center">
-						<input type="submit" value="Submit Guide" class="btn btn-primary">
+						<button type="button" class="btn btn-primary" id="submit-btn">Submit Guide</button>
 					</div>
 				</div>
 			</div>
