@@ -48,10 +48,22 @@
 		if (pageBoxes.length % 3 != 0)
 			return false;
 		for (var i = 0; i < pageBoxes.length; i+=3) {
-			if ($.trim(pageBoxes[i].value) == "")
+			var pageNum = parseInt(pageBoxes[i].value);
+			var startTime = pageBoxes[i+1].value;
+			var endTime = pageBoxes[i+2].value;
+			if (pageNum != pageNum) // check for NaN
 				return false;
+			if (!validateTimes(startTime, endTime))
+				return false;
+
 		}
 		return true;
+	}
+
+	// Returns true iff start and end are both valid time strings
+	// and end is later than start
+	function validateTimes(start, end) {
+		return false;
 	}
 
 	// Appends a new row to the table, with intelligently filled in values
