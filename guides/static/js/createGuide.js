@@ -63,8 +63,26 @@
 	// Returns true iff start and end are both valid time strings
 	// and end is later than start
 	function validateTimes(start, end) {
-		return false;
+		var startTokens = start.split(":");
+		var endTokens = end.split(":");
+		if (startTokens.length != 2 || endTokens.length != 2)
+			return false;
+		var startMin = parseInt(startTokens[0]);
+		var startSecs = parseInt(startTokens[1]);
+		var endMin = parseInt(endTokens[0]);
+		var endSecs = parseInt(endTokens[1]);
+		// Check for NaN
+		if (startMin != startMin || startSecs != startSecs
+			|| endMin != endMin || endSecs != endSecs)
+			return false;
+
+		// Check non-negativity
+		if (startMin < 0 || startSecs < 0 || endMin < 0 || endSecs < 0)
+			return false;
+		// Check end > start
+		return (endMin * 60 + endSecs) > (startMin * 60 + startSecs);
 	}
+
 
 	// Appends a new row to the table, with intelligently filled in values
 	// type = A string, either "page" or "guide", which describes
