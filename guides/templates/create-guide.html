@@ -17,12 +17,13 @@
 		<header id="title-header"><h1 class="text-center">Create Guide</h1></header>
 		<form method="post" enctype="multipart/form-data" action="submit/">
 			{% csrf_token %}
-			<div class="row">
-				<div class="col-sm-12">
-					<h2>Step 1: Write a summary</h2>
-					<textarea autocomplete="off" id="summary" rows="10" spellcheck="true" placeholder="Tell us why this piece is great!"></textarea>
-				</div>
-			</div>
+			<input type="hidden" name="guide-data" value=''>
+			<input type="hidden" name="page-data" value=''>
+			<h2>Step 0: Title</h2>
+			<input type="text" name="title" value="">
+			<h2>Step 1: Write a summary</h2>
+			<textarea autocomplete="off" id="summary" rows="10" spellcheck="true" placeholder="Tell us why this piece is great!"></textarea>
+			
 			<div class="row">
 				<div class="col-sm-6">
 					<h2>Step 2: Upload your audio file</h2>

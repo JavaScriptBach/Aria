@@ -24,6 +24,11 @@
 		$(this).prop('disabled', true);
 		if (validateData()) {
 			// TODO: parse data into a JSON string and submit it
+			var guide = {
+				summary: $.trim($("#summary").val()),
+				pageData: 
+			};
+
 			$("form").submit();
 		} else {
 			alert("You did not enter valid data");
