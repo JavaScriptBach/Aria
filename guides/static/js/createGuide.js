@@ -24,10 +24,26 @@
 		$(this).prop('disabled', true);
 		if (validateData()) {
 			// TODO: parse data into a JSON string and submit it
-			var guide = {
-				summary: $.trim($("#summary").val()),
-				pageData: 
-			};
+			var guideData = [];
+			var pageData = [];
+			var pageBoxes = $("#page-data input");
+			var guideBoxes = $("#guide-data input");
+			for (var i = 0; i < pageBoxes.length; i+=3) {
+				pageData.push({
+					page: parseInt(pageBoxes[i].value),
+					start: $.trim(pageBoxes[i+1].value),
+					end: $.trim(pageBoxes[i+2].value)
+				});
+			}
+
+			for (var i = 0; i < guideBoxes.length; i+=3) {
+				guideData.push({
+					text: $.trim(guideBoxes[i].value),
+					start: $.trim(guideBoxes[i+1].value),
+					end: $.trim(guideBoxes[i+2].value)
+				});
+			}
+
 
 			$("form").submit();
 		} else {
@@ -54,13 +70,25 @@
 			return false;
 		for (var i = 0; i < pageBoxes.length; i+=3) {
 			var pageNum = parseInt(pageBoxes[i].value);
-			var startTime = pageBoxes[i+1].value;
-			var endTime = pageBoxes[i+2].value;
+			var startTime = $.trim(pageBoxes[i+1].value);
+			var endTime = $.trim(pageBoxes[i+2].value);
 			if (pageNum != pageNum) // check for NaN
 				return false;
 			if (!validateTimes(startTime, endTime))
 				return false;
 
+		}
+
+		var guideBoxes = $("#guide-data input");
+		if (guideBoxes.length % 3 != 0)
+			return false;
+		for (var i = 0; i < guideBoxes.length; i+=3) {
+			if ($.trim(guideBoxes[i].value) == "")
+				return false;
+			var startTime = $.trim(guideBoxes[i+1].value);
+			var endTime = $.trim(guideBoxes.[i+2].value);
+			if (!vlaidateTimes(startTime, endTime))
+				return false;
 		}
 		return true;
 	}
