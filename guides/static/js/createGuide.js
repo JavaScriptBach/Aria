@@ -80,14 +80,15 @@
 		}
 
 		var guideBoxes = $("#guide-data input");
+		// TODO: fix selector to include textareas as well
 		if (guideBoxes.length % 3 != 0)
 			return false;
 		for (var i = 0; i < guideBoxes.length; i+=3) {
 			if ($.trim(guideBoxes[i].value) == "")
 				return false;
 			var startTime = $.trim(guideBoxes[i+1].value);
-			var endTime = $.trim(guideBoxes.[i+2].value);
-			if (!vlaidateTimes(startTime, endTime))
+			var endTime = $.trim(guideBoxes[i+2].value);
+			if (!validateTimes(startTime, endTime))
 				return false;
 		}
 		return true;
