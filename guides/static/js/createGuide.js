@@ -28,6 +28,7 @@
 			var pageData = [];
 			var pageBoxes = $("#page-data input");
 			var guideBoxes = $("#guide-data input");
+			var guideTextAreas = $("#guide-data textarea");
 			for (var i = 0; i < pageBoxes.length; i+=3) {
 				pageData.push({
 					page: parseInt(pageBoxes[i].value),
@@ -36,12 +37,15 @@
 				});
 			}
 
-			for (var i = 0; i < guideBoxes.length; i+=3) {
+			for (var i = 0; i < guideBoxes.length; i+=2) {
 				guideData.push({
-					text: $.trim(guideBoxes[i].value),
-					start: $.trim(guideBoxes[i+1].value),
-					end: $.trim(guideBoxes[i+2].value)
+					start: $.trim(guideBoxes[i].value),
+					end: $.trim(guideBoxes[i+1].value)
 				});
+			}
+
+			for (var i = 0; i < guideTextAreas.length; i++) {
+				guideData[i].text = $.trim(guideTextAreas[i].textContent);
 			}
 
 
