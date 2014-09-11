@@ -45,7 +45,7 @@
 			}
 
 			for (var i = 0; i < guideTextAreas.length; i++) {
-				guideData[i].text = $.trim(guideTextAreas[i].textContent);
+				guideData[i].text = $.trim(guideTextAreas[i].value);
 			}
 
 
@@ -96,7 +96,7 @@
 		}
 
 		for (var i = 0; i < textAreas.length; i++) {
-			if (!$.trim(textAreas[i].textContent))
+			if (!$.trim(textAreas[i].value))
 				return false;
 		}
 		return true;
