@@ -47,7 +47,10 @@
 			for (var i = 0; i < guideTextAreas.length; i++) {
 				guideData[i].text = $.trim(guideTextAreas[i].value);
 			}
-
+			// alert(JSON.stringify(guideData));
+			// $(this).prop('disabled', false);
+			$("input[name='guide-data']").val(JSON.stringify(guideData));
+			$("input[name='page-data']").val(JSON.stringify(pageData));
 
 			$("form").submit();
 		} else {

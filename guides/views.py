@@ -13,5 +13,11 @@ class DetailView(generic.DetailView):
 def create(request):
     return render(request, 'create-guide.html')
 def submit_guide(request):
-    message = "Hello world"
-    return HttpResponse(message)
+	# TODO: add server side input validation
+    title = request.POST["title"]
+    artist = request.POST["artist"]
+    summary = request.POST["summary"]
+    guide_data = request.POST["guide-data"]
+    page_data = request.POST["page-data"]
+    print request.POST
+    return HttpResponse(request.POST["title"])
